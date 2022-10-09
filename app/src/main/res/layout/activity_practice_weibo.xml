@@ -31,21 +31,24 @@
             app:srlPrimaryColor="@android:color/transparent"
             app:srlAccentColor="@android:color/white"/>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
-                    <android.support.design.widget.CollapsingToolbarLayout
+
+                    <com.google.android.material.appbar.CollapsingToolbarLayout
                         android:id="@+id/collapse"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -159,13 +162,14 @@
                                 android:shadowDy="2.5"
                                 android:shadowRadius="10"
                                 android:textColor="@android:color/white"
-                                android:text="访客总量 15"/>
+                                android:text="访客总量 15" />
 
-                            <View style="@style/AppTheme.Division"
-                                android:layout_alignParentBottom="true"/>
+                            <View
+                                style="@style/AppTheme.Division"
+                                android:layout_alignParentBottom="true" />
                         </RelativeLayout>
 
-                    </android.support.design.widget.CollapsingToolbarLayout>
+                    </com.google.android.material.appbar.CollapsingToolbarLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1002,31 +1006,36 @@
                                 android:textColor="@android:color/tertiary_text_dark"
                                 android:adjustViewBounds="true"
                                 android:contentDescription="@string/app_name"
-                                android:src="@mipmap/image_practice_repast_1"/>
-                            <TextView style="@style/AppTheme.Label.Title"
+                                android:src="@mipmap/image_practice_repast_1" />
+
+                            <TextView
+                                style="@style/AppTheme.Label.Title"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginTop="@dimen/dimenPaddingDiminutive"
                                 android:textColor="@android:color/tertiary_text_dark"
-                                android:text="winter farewell"/>
+                                android:text="winter farewell" />
                         </com.flyco.roundview.RoundLinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+    <androidx.appcompat.widget.Toolbar
+        style="@style/AppTheme.Toolbar"
         android:id="@+id/toolbar"
         android:background="@android:color/transparent"
         android:layout_marginBottom="0dp"
         app:navigationIcon="?attr/homeAsUpIndicator"
         app:layout_collapseMode="pin">
-        <android.support.v7.widget.ButtonBarLayout
+
+        <androidx.appcompat.widget.ButtonBarLayout
             android:id="@+id/buttonBarLayout"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content">
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/toolbar_avatar"
                 android:layout_width="32dp"
@@ -1036,14 +1045,15 @@
                 android:src="@mipmap/image_avatar_5"
                 app:civ_border_width="@dimen/division_line"
                 app:civ_border_color="@android:color/white"
-                app:civ_border_overlay="true"/>
+                app:civ_border_overlay="true" />
+
             <TextView
                 android:id="@+id/title"
                 android:layout_gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textSize="16sp"
-                android:text="一醉方休"/>
-        </android.support.v7.widget.ButtonBarLayout>
-    </android.support.v7.widget.Toolbar>
+                android:text="一醉方休" />
+        </androidx.appcompat.widget.ButtonBarLayout>
+    </androidx.appcompat.widget.Toolbar>
 </FrameLayout>

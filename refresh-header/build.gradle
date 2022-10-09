@@ -3,14 +3,14 @@ apply plugin: 'com.android.library'
 
 android {
 
-    compileSdkVersion 28
+    compileSdkVersion 31
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 31
         versionCode 1
         versionName SMART_VERSION
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -25,19 +25,19 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation 'androidx.core:core:1.7.0'
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.4.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
 
-    compileOnly 'com.android.support:support-annotations:28.0.0'
-    compileOnly 'com.android.support:support-v4:28.0.0'
-    compileOnly project(':refresh-layout')
-    compileOnly project(':refresh-drawable-path')
-    compileOnly project(':refresh-header-material')
+    implementation 'androidx.annotation:annotation:1.3.0'
+    implementation project(':refresh-layout')
+    implementation project(':refresh-drawable-path')
+    implementation project(':refresh-header-material')
 
-    compileOnly project(':refresh-layout-kernel')
-    compileOnly project(':refresh-header-falsify')
+    implementation project(':refresh-layout-kernel')
+    implementation project(':refresh-header-falsify')
 }
 
 //publish {

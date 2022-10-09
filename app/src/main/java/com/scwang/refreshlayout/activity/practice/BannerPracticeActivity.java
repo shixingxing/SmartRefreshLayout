@@ -1,41 +1,36 @@
 package com.scwang.refreshlayout.activity.practice;
 
-import android.content.Context;
-import android.os.Build;
+import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.refreshlayout.R;
+import com.scwang.refreshlayout.activity.adapter.BannerPracticeAdapter;
 import com.scwang.refreshlayout.util.StatusBarUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * 广告轮播-Banner
@@ -65,7 +60,8 @@ public class BannerPracticeActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
-        final List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+        final List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {
+        }.getType());
         mAdapter.replaceData(movies);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -74,12 +70,13 @@ public class BannerPracticeActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if (mAdapter.getItemCount() < 2) {
-                            List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {}.getType());
+                            List<Movie> movies = new Gson().fromJson(JSON_MOVIES, new TypeToken<ArrayList<Movie>>() {
+                            }.getType());
                             mAdapter.replaceData(movies);
                         }
                         refreshLayout.finishRefresh();
                     }
-                },2000);
+                }, 2000);
             }
         });
 //        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -101,27 +98,17 @@ public class BannerPracticeActivity extends AppCompatActivity {
         //添加Header
         View header = LayoutInflater.from(this).inflate(R.layout.item_movie_header, recyclerView, false);
         Banner banner = (Banner) header;
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setImages(BANNER_ITEMS);
+        banner.setAdapter(new BannerPracticeAdapter(BANNER_ITEMS), true);
+
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
-            public void OnBannerClick(int i) {
-                Toast.makeText(BannerPracticeActivity.this, "点击了第" + i + "页", Toast.LENGTH_SHORT).show();
+            public void OnBannerClick(Object data, int position) {
+                Toast.makeText(BannerPracticeActivity.this, "点击了第" + position + "页", Toast.LENGTH_SHORT).show();
             }
         });
-        if (Build.VERSION.SDK_INT > 26) {
-            Stream<String> stream = BANNER_ITEMS.stream().map(new Function<BannerItem, String>() {
-                @Override
-                public String apply(BannerItem bannerItem) {
-                    return bannerItem.title;
-                }
-            });
-            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE_INSIDE);
-            banner.setBannerTitles(stream.collect(Collectors.<String>toList()));
-        }
         banner.start();
         mAdapter.addHeaderView(banner);
-        mAdapter.openLoadAnimation();
+//        mAdapter.openLoadAnimation();
 
         //状态栏透明和间距处理
         StatusBarUtil.immersive(this);
@@ -142,16 +129,11 @@ public class BannerPracticeActivity extends AppCompatActivity {
                     .setText(R.id.lmi_actor, item.actors)
                     .setText(R.id.lmi_grade, item.grade)
                     .setText(R.id.lmi_describe, item.shortinfo);
-            Glide.with(mContext).load(item.picaddr).into((ImageView) viewHolder.getView(R.id.lmi_avatar));
+            ImageView avatar = (ImageView) viewHolder.getView(R.id.lmi_avatar);
+            Glide.with(avatar).load(item.picaddr).into(avatar);
         }
     }
 
-    public class GlideImageLoader extends ImageLoader {
-        @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            imageView.setImageResource(((BannerItem) path).pic);
-        }
-    }
 
     public static class Movie {
         public String actors;
@@ -176,7 +158,7 @@ public class BannerPracticeActivity extends AppCompatActivity {
         }
     }
 
-    public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>(){{
+    public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>() {{
         add(new BannerItem("最后的骑士", R.mipmap.image_movie_header_48621499931969370));
         add(new BannerItem("三生三世十里桃花", R.mipmap.image_movie_header_12981501221820220));
         add(new BannerItem("豆福传", R.mipmap.image_movie_header_12231501221682438));

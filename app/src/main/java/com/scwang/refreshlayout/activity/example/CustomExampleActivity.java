@@ -1,10 +1,9 @@
 package com.scwang.refreshlayout.activity.example;
 
+import static android.R.layout.simple_list_item_2;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Space;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.scwang.refreshlayout.R;
 import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
@@ -28,8 +31,6 @@ import com.scwang.smart.refresh.layout.util.SmartUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import static android.R.layout.simple_list_item_2;
 
 /**
  * 自定义Header功能使用
